@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Núclea — Assistente educacional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="login.css" />
+</head>
+<body>
+
+<!-- ================= TELA DE LOGIN ================= -->
+<div id="login">
+  <div class="login-brand">
+    <div class="brand-logo-row">
+      <img src="icons/atomo.png" alt="" onerror="this.style.display='none'" />
+      <div class="brand-name">Nu<span>clea</span></div>
+    </div>
+
+    <div class="brand-copy">
+      <h1>Estude com clareza. Aprenda com profundidade.</h1>
+      <p>Seu assistente educacional pessoal: respostas objetivas, revisões inteligentes e apoio nos estudos, onde e quando precisar.</p>
+
+      <div class="brand-points">
+        <div class="brand-point">
+          <div class="bp-ic">●</div>
+          <div class="bp-t">
+            <span>Conteúdo confiável</span>
+            <div class="bp-s">Respostas educacionais honestas, com nível e tema identificados.</div>
+          </div>
+        </div>
+        <div class="brand-point">
+          <div class="bp-ic">◉</div>
+          <div class="bp-t">
+            <span>Acompanhamento do progresso</span>
+            <div class="bp-s">Seu histórico, tarefas e evolução sincronizados na nuvem.</div>
+          </div>
+        </div>
+        <div class="brand-point">
+          <div class="bp-ic">❖</div>
+          <div class="bp-t">
+            <span>Foco total</span>
+            <div class="bp-s">Interface limpa e minimalista para você se concentrar no que importa.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-foot">© 2026 Núclea · Assistente educacional</div>
+  </div>
+
+  <div class="login-panel">
+    <div class="login-card">
+      <div class="lc-logo">
+        <img src="icons/atomo.png" alt="" onerror="this.style.display='none'" />
+        <div class="brand-name">Nu<span>clea</span></div>
+      </div>
+
+      <h2 id="lc-title">Bem-vindo de volta</h2>
+      <p class="lc-sub" id="lc-sub">Acesse sua conta para continuar seus estudos.</p>
+
+      <div class="lc-tabs">
+        <button class="lc-tab on" id="tab-login" type="button" onclick="setMode('login')">Entrar</button>
+        <button class="lc-tab" id="tab-register" type="button" onclick="setMode('register')">Criar conta</button>
+      </div>
+
+      <form class="lc-fields" onsubmit="submitAuth(event)">
+        <div class="lc-field">
+          <label for="lc-email">Email</label>
+          <input id="lc-email" type="email" autocomplete="email" placeholder="voce@exemplo.com" required />
+        </div>
+        <div class="lc-field">
+          <label for="lc-pass">Senha</label>
+          <input id="lc-pass" type="password" autocomplete="current-password" placeholder="••••••••" required />
+        </div>
+        <button class="lc-primary" id="lc-primary" type="submit">Entrar</button>
+      </form>
+
+      <div class="lc-err" id="lc-err"></div>
+
+      <div class="lc-sep"><span>ou continue com</span></div>
+
+      <button class="lc-google" type="button" id="btn-google" onclick="authGoogle()">
+        <svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true">
+          <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.2l6.8-6.8C35.8 2.5 30.2 0 24 0 14.7 0 6.7 5.4 2.8 13.3l7.9 6.1C12.6 13.2 17.9 9.5 24 9.5z"/>
+          <path fill="#4285F4" d="M46.1 24.6c0-1.6-.1-3.1-.4-4.6H24v8.7h12.4c-.5 2.8-2.1 5.2-4.5 6.8l7 5.4c4.1-3.8 6.2-9.4 6.2-16.3z"/>
+          <path fill="#FBBC05" d="M10.7 28.6A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.1.7-4.6l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.8 10.7l7.9-6.1z"/>
+          <path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.5l-7-5.4c-2 1.4-4.6 2.2-8.2 2.2-6.1 0-11.4-3.7-13.3-9l-7.9 6.1C6.7 42.6 14.7 48 24 48z"/>
+        </svg>
+        Entrar com Google
+      </button>
+
+      <button class="lc-anon" type="button" onclick="authAnonymous()">Continuar anônimo</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app" class="hidden">
+  <aside class="side" id="side">
+    <button class="side-toggle" id="side-toggle" onclick="toggleSide()" title="Recolher menu">‹</button>
+
+    <div class="side-head">
+      <img src="icons/atomo.png" alt="" onerror="this.style.display='none'" />
+      <div class="brand-name">Nu<span>clea</span></div>
+    </div>
+
+    <button class="side-new" onclick="newChat()">＋ Nova conversa</button>
+    <div class="side-label">Conversas</div>
+
+    <div class="side-list" id="conv-list"></div>
+
+    <div class="side-foot">
+      <div class="side-av" id="user-av">U</div>
+      <div class="side-user">
+        <div class="su-name" id="user-name">Usuário</div>
+        <div class="su-mail" id="user-mail"></div>
+      </div>
+      <button class="side-logout" onclick="authLogout()" title="Sair da conta">⎋</button>
+    </div>
+  </aside>
+
+  <div class="main-n">
+    <div class="topbar">
+      <div>
+        <div class="tb-title" id="tb-title">Núclea</div>
+        <div class="tb-sub" id="tb-sub">Assistente educacional</div>
+      </div>
+      <div class="tb-right">
+        <span class="tb-user"><span id="tb-user-label">Início</span></span>
+      </div>
+    </div>
+
+    <div class="chat-wrap" id="chat-wrap">
+      <div class="empty-state" id="empty-state">
+        <div class="es-ic">✦</div>
+        <h2 id="greeting">Bom dia</h2>
+        <p>Pergunte, estude ou peça uma revisão. A Núclea responde com clareza e foco educacional.</p>
+        <div class="sugg-grid">
+          <button class="sugg" onclick="ask('Explique o que é fotossíntese de forma didática.')">
+            <span class="s-t">📘 Explicar conceito</span>
+            Explique um tema com simplicidade e exemplos.
+          </button>
+          <button class="sugg" onclick="ask('Monte um plano de estudos para a próxima semana.')">
+            <span class="s-t">🗓️ Plano de estudo</span>
+            Organize sua rotina e prioridades.
+          </button>
+          <button class="sugg" onclick="ask('Faça um resumo sobre a Revolução Francesa.')">
+            <span class="s-t">📝 Resumo rápido</span>
+            Um panorama direto de um assunto.
+          </button>
+          <button class="sugg" onclick="ask('Quero revisar matemática básica. Por onde começo?')">
+            <span class="s-t">🧮 Revisão guiada</span>
+            Receba um ponto de partida de estudo.
+          </button>
+        </div>
+      </div>
+      <div class="thread hidden" id="thread"></div>
+    </div>
+
+    <div class="composer-wrap">
+      <div class="composer">
+        <textarea id="input" rows="1" placeholder="Escreva uma mensagem…" onkeydown="onKey(event)"></textarea>
+        <button class="send" id="send-btn" onclick="send()" title="Enviar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+      <div class="composer-hint">A Núclea pode cometer erros. Verifique informações importantes.</div>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+(function () {
+  var FIREBASE_CONFIG = {
+    apiKey: "AIzaSyCHnPz_bb92UoMBTcjegIGQ_GgY6FluRBk",
+    authDomain: "nucleaai-30555.firebaseapp.com",
+    projectId: "nucleaai-30555",
+    storageBucket: "nucleaai-30555.firebasestorage.app",
+    messagingSenderId: "809997459519",
+    appId: "1:809997459519:web:392698d2eccfe3380e988a",
+    measurementId: "G-HCPBQXEJJ3"
+  };
+
+  var auth = null;
+  var user = null;
+  var conversations = [];
+  var currentId = null;
+  var busy = false;
+  var authMode = 'login';
+  var MODEL = String((typeof CONFIG !== 'undefined' && CONFIG.GEMINI_MODEL) || 'gemini-3.5-flash-lite').trim().replace(/^models\//, '');
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ---------- helpers ---------- */
+  function loadScript(src, cb) {
+    var s = document.createElement('script');
+    s.src = src; s.onload = cb;
+    s.onerror = function () { console.warn('[Nuclea] load fail:', src); };
+    document.head.appendChild(s);
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function mdToHtml(text) {
+    var t = esc(text);
+    var parts = t.split(/```/);
+    var html = '';
+    for (var p = 0; p < parts.length; p++) {
+      if (p % 2 === 1) {
+        html += '<pre>' + parts[p].replace(/^\n/, '').replace(/\n$/, '') + '</pre>';
+      } else {
+        html += inlineMd(parts[p]);
+      }
+    }
+    return html;
+  }
+
+  function inlineMd(t) {
+    t = t.replace(/`([^`]+)`/g, '<code>$1</code>');
+    t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    t = t.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+    var lines = t.split('\n');
+    var html = '', inList = null;
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      if (!line.trim()) { if (inList) { html += '</' + inList + '>'; inList = null; } html += '<br>'; continue; }
+      var ul = line.match(/^[-•]\s+(.*)/);
+      var ol = line.match(/^\d+[.)]\s+(.*)/);
+      if (ul) {
+        if (inList !== 'ul') { if (inList) html += '</' + inList + '>'; html += '<ul>'; inList = 'ul'; }
+        html += '<li>' + ul[1] + '</li>'; continue;
+      }
+      if (ol) {
+        if (inList !== 'ol') { if (inList) html += '</' + inList + '>'; html += '<ol>'; inList = 'ol'; }
+        html += '<li>' + ol[1] + '</li>'; continue;
+      }
+      if (inList) { html += '</' + inList + '>'; inList = null; }
+      html += '<p>' + line + '</p>';
+    }
+    if (inList) html += '</' + inList + '>';
+    return html;
+  }
+
+  function saveLocal() {
+    try { localStorage.setItem('nuclea_conv', JSON.stringify(conversations)); } catch (e) {}
+  }
+
+  function loadLocal() {
+    try {
+      var raw = localStorage.getItem('nuclea_conv');
+      if (raw) conversations = JSON.parse(raw) || [];
+    } catch (e) { conversations = []; }
+  }
+
+  function titleOf(msgs) {
+    for (var i = 0; i < msgs.length; i++) {
+      if (msgs[i].role === 'user') {
+        var c = msgs[i].content;
+        return c.slice(0, 42) + (c.length > 42 ? '…' : '');
+      }
+    }
+    return 'Nova conversa';
+  }
+
+  /* ---------- autenticação ---------- */
+  function setMode(mode) {
+    authMode = mode === 'register' ? 'register' : 'login';
+    $('tab-login').classList.toggle('on', authMode === 'login');
+    $('tab-register').classList.toggle('on', authMode === 'register');
+    $('lc-title').textContent = authMode === 'register' ? 'Criar sua conta' : 'Bem-vindo de volta';
+    $('lc-sub').textContent = authMode === 'register'
+      ? 'Crie uma conta gratuita e sincronize seus estudos.'
+      : 'Acesse sua conta para continuar seus estudos.';
+    $('lc-primary').textContent = authMode === 'register' ? 'Criar conta' : 'Entrar';
+    setErr('');
+  }
+
+  function setErr(msg) { $('lc-err').textContent = msg || ''; }
+
+  function setBusy(b) {
+    $('lc-email').disabled = b;
+    $('lc-pass').disabled = b;
+    $('lc-primary').disabled = b;
+    $('btn-google').disabled = b;
+    $('lc-primary').textContent = b ? 'Aguarde…' : (authMode === 'register' ? 'Criar conta' : 'Entrar');
+  }
+
+  window.setMode = setMode;
+
+  window.authGoogle = function () {
+    if (typeof firebase === 'undefined' || !firebase.app) { setErr('Carregando… tente de novo em instantes.'); return; }
+    setBusy(true); setErr('');
+    var provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    firebase.auth().signInWithPopup(provider).then(function () {
+      setBusy(false);
+    }).catch(function (e) {
+      if (e.code === 'auth/popup-closed-by-user') return;
+      setErr('Erro ao entrar com Google: ' + e.message);
+      setBusy(false);
+    });
+  };
+
+  window.authAnonymous = function () {
+    if (typeof firebase === 'undefined' || !firebase.app) { setErr('Carregando… tente de novo em instantes.'); return; }
+    setBusy(true); setErr('');
+    firebase.auth().signInAnonymously()
+      .catch(function (e) {
+        setErr('Erro ao entrar anonimamente: ' + e.message);
+        setBusy(false);
+      });
+  };
+
+  window.submitAuth = function (ev) {
+    ev.preventDefault();
+    if (typeof firebase === 'undefined' || !firebase.app) { setErr('Carregando… tente de novo em instantes.'); return; }
+    var email = $('lc-email').value.trim();
+    var pass = $('lc-pass').value;
+    if (!email || !pass) { setErr('Preencha email e senha.'); return; }
+    if (pass.length < 6) { setErr('A senha precisa ter pelo menos 6 caracteres.'); return; }
+    setBusy(true); setErr('');
+    var action = authMode === 'register'
+      ? firebase.auth().createUserWithEmailAndPassword(email, pass)
+      : firebase.auth().signInWithEmailAndPassword(email, pass);
+    action.catch(function (e) {
+      var msg = e.message;
+      if (e.code === 'auth/email-already-in-use') msg = 'Este email já tem uma conta. Use Entrar.';
+      if (e.code === 'auth/user-not-found' || e.code === 'auth/wrong-password') msg = 'Email ou senha incorretos.';
+      if (e.code === 'auth/invalid-email') msg = 'Digite um email válido.';
+      if (e.code === 'auth/operation-not-allowed') msg = 'Ative Email/Senha no Firebase Authentication.';
+      setErr(msg);
+      setBusy(false);
+    });
+  };
+
+  window.authLogout = function () {
+    if (!confirm('Sair da conta?')) return;
+    firebase.auth().signOut();
+  };
+
+  /* ---------- interface após login ---------- */
+  function showApp(u) {
+    // Ao autenticar, o usuário é enviado ao app completo (app.html)
+    window.location.href = 'app.html';
+  }
+
+  function toggleSide() {
+    document.body.classList.toggle('side-collapsed');
+    var collapsed = document.body.classList.contains('side-collapsed');
+    $('side-toggle').textContent = collapsed ? '›' : '‹';
+  }
+  window.toggleSide = toggleSide;
+
+  /* ---------- conversas ---------- */
+  function newChat() {
+    saveCurrent();
+    currentId = 'c' + Date.now();
+    conversations.unshift({ id: currentId, messages: [], ts: Date.now() });
+    saveLocal();
+    renderList();
+    showEmpty();
+    $('tb-title').textContent = 'Nova conversa';
+    $('tb-sub').textContent = 'Assistente educacional';
+    $('input').focus();
+  }
+  window.newChat = newChat;
+
+  function saveCurrent() {
+    if (!currentId) return;
+    for (var i = 0; i < conversations.length; i++) {
+      if (conversations[i].id === currentId) {
+        conversations[i].messages = conversations[i].messages || [];
+        conversations[i].title = titleOf(conversations[i].messages);
+        conversations[i].ts = Date.now();
+      }
+    }
+  }
+
+  function openConv(id) {
+    saveCurrent();
+    currentId = id;
+    renderList();
+    var conv = getConv(id);
+    if (!conv) { newChat(); return; }
+    if (conv.messages.length) renderThread(conv.messages);
+    else showEmpty();
+    $('tb-title').textContent = conv.title || 'Conversa';
+    $('tb-sub').textContent = 'Assistente educacional';
+  }
+  window.openConv = openConv;
+
+  function delConv(id, ev) {
+    ev.stopPropagation();
+    var nh = [];
+    for (var i = 0; i < conversations.length; i++) if (conversations[i].id !== id) nh.push(conversations[i]);
+    conversations = nh;
+    saveLocal();
+    if (id === currentId) newChat();
+    else renderList();
+  }
+  window.delConv = delConv;
+
+  function getConv(id) {
+    for (var i = 0; i < conversations.length; i++) if (conversations[i].id === id) return conversations[i];
+    return null;
+  }
+
+  function renderList() {
+    var el = $('conv-list');
+    el.innerHTML = '';
+    if (!conversations.length) {
+      el.innerHTML = '<div class="side-empty">Nenhuma conversa ainda.<br>Comece uma nova! ✍️</div>';
+      return;
+    }
+    for (var i = 0; i < conversations.length; i++) {
+      var c = conversations[i];
+      var title = c.title || 'Conversa';
+      var b = document.createElement('div');
+      b.className = 'side-item' + (c.id === currentId ? ' on' : '');
+      (function (id) { b.onclick = function () { openConv(id); }; })(c.id);
+      b.innerHTML =
+        '<span class="si-ic">◈</span>' +
+        '<span class="si-t">' + esc(title) + '</span>' +
+        '<button class="si-del" title="Apagar">×</button>';
+      b.querySelector('.si-del').onclick = function (id, e) { return function (evt) { delConv(id, evt); }; }(c.id, e);
+      el.appendChild(b);
+    }
+  }
+
+  /* ---------- chat ---------- */
+  function showEmpty() {
+    $('empty-state').classList.remove('hidden');
+    $('thread').classList.add('hidden');
+    $('thread').innerHTML = '';
+  }
+
+  function renderThread(msgs) {
+    $('empty-state').classList.add('hidden');
+    var t = $('thread');
+    t.classList.remove('hidden');
+    t.innerHTML = '';
+    for (var i = 0; i < msgs.length; i++) t.appendChild(msgNode(msgs[i]));
+    scrollBottom();
+  }
+
+  function msgNode(m) {
+    var d = document.createElement('div');
+    d.className = 'msg ' + (m.role === 'user' ? 'user' : 'ai');
+    var who = m.role === 'user' ? 'Você' : 'Núclea';
+    var av = m.role === 'user' ? (user && user.isAnonymous ? 'V' : currentUserInitial()) : '✦';
+    var html = '<div class="msg-av">' + av + '</div>' +
+      '<div class="msg-body">' +
+        '<div class="msg-who">' + who + '</div>' +
+        '<div class="msg-content">' + mdToHtml(m.content) + '</div>';
+    if (m.role === 'ai') {
+      html += '<div class="msg-actions"><button class="msg-copy" onclick="copyMsg(this)">Copiar</button></div>';
+    }
+    html += '</div>';
+    d.innerHTML = html;
+    d.dataset.content = m.content;
+    return d;
+  }
+
+  function currentUserInitial() {
+    var name = user ? ((user.displayName || user.email || 'U').split(' ')[0] || 'U') : 'U';
+    return name[0].toUpperCase();
+  }
+
+  function addMessage(role, content) {
+    var conv = getConv(currentId);
+    if (!conv) return;
+    conv.messages.push({ role: role, content: content });
+    if (!$('thread').classList.contains('hidden')) {
+      $('thread').appendChild(msgNode({ role: role, content: content }));
+    } else {
+      renderThread(conv.messages);
+    }
+    scrollBottom();
+  }
+
+  function clearTyping() { var e = $('typing-node'); if (e) e.remove(); }
+
+  function addTyping() {
+    clearTyping();
+    var d = document.createElement('div');
+    d.className = 'msg ai';
+    d.id = 'typing-node';
+    d.innerHTML = '<div class="msg-av">✦</div><div class="msg-body"><div class="msg-who">Núclea</div><div class="typing"><span></span><span></span><span></span></div></div>';
+    $('thread').appendChild(d);
+    scrollBottom();
+  }
+
+  function scrollBottom() {
+    var w = $('chat-wrap');
+    setTimeout(function () { w.scrollTop = w.scrollHeight; }, 10);
+  }
+
+  function ask(q) {
+    $('input').value = q;
+    send();
+  }
+  window.ask = ask;
+
+  function onKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      send();
+    }
+  }
+  window.onKey = onKey;
+
+  function getAppCheckHeader(cb, forceRefresh) {
+    function requestToken() {
+      try {
+        firebase.appCheck().getToken(!!forceRefresh).then(function (r) {
+          var headers = r && r.token ? { 'X-Firebase-AppCheck': r.token } : {};
+          try {
+            var currentUser = firebase.auth && firebase.auth().currentUser;
+            if (currentUser && currentUser.getIdToken) {
+              return currentUser.getIdToken(!!forceRefresh).then(function (idToken) {
+                if (idToken) headers.Authorization = 'Bearer ' + idToken;
+                cb(headers);
+              }).catch(function () { cb(headers); });
+            }
+          } catch (e) {}
+          cb(headers);
+        }).catch(function () { cb({}); });
+      } catch (e) { cb({}); }
+    }
+
+    if (window.nucleaAppCheckReady && typeof window.nucleaAppCheckReady.then === 'function') {
+      window.nucleaAppCheckReady.then(requestToken).catch(requestToken);
+    } else {
+      requestToken();
+    }
+  }
+
+  function callBackend(content, cb, errCb) {
+    function request(forceAppCheckRefresh) {
+      getAppCheckHeader(function (headers) {
+        headers['Content-Type'] = 'application/json';
+        fetch('/api/gemini', {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify({
+            model: MODEL,
+            content: { role: 'user', parts: [{ text: content }] }
+          })
+        }).then(function (res) {
+          return res.json().catch(function () { return {}; }).then(function (data) {
+            return { ok: res.ok, status: res.status, data: data };
+          });
+        }).then(function (r) {
+          if (!forceAppCheckRefresh && r.status === 401 && /app check|token/i.test(r.data.error || '')) {
+            request(true);
+            return;
+          }
+          if (r.ok && r.data && r.data.resposta) cb(r.data.resposta);
+          else errCb('Gemini ' + r.status + ': ' + (r.data.error || 'Backend indisponível'));
+        }).catch(function (err) {
+          errCb('Erro de rede: ' + err.message);
+        });
+      }, forceAppCheckRefresh);
+    }
+
+    request(false);
+  }
+
+  function send() {
+    var inp = $('input');
+    var msg = inp.value.trim();
+    if (!msg || busy) return;
+    inp.value = '';
+    inp.style.height = '';
+    $('send-btn').disabled = true;
+    busy = true;
+
+    var conv = getConv(currentId);
+    if (!conv) { newChat(); conv = getConv(currentId); }
+
+    $('empty-state').classList.add('hidden');
+    if ($('thread').classList.contains('hidden')) {
+      $('thread').classList.remove('hidden');
+      $('thread').innerHTML = '';
+    }
+
+    addMessage('user', msg);
+    $('tb-title').textContent = titleOf(getConv(currentId).messages);
+    addTyping();
+
+    callBackend(msg, function (answer) {
+      clearTyping();
+      busy = false;
+      $('send-btn').disabled = false;
+      addMessage('ai', answer);
+      saveCurrent();
+      saveLocal();
+      renderList();
+    }, function (err) {
+      clearTyping();
+      busy = false;
+      $('send-btn').disabled = false;
+      addMessage('ai', '❌ ' + err);
+      saveLocal();
+    });
+  }
+  window.send = send;
+
+  window.copyMsg = function (btn) {
+    var d = btn.closest('.msg');
+    var content = d && d.dataset.content ? d.dataset.content : '';
+    var done = function () {
+      btn.textContent = 'Copiado ✓';
+      btn.classList.add('ok');
+      setTimeout(function () { btn.textContent = 'Copiar'; btn.classList.remove('ok'); }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(content).then(done).catch(function () { fallbackCopy(content, done); });
+    } else fallbackCopy(content, done);
+  };
+
+  function fallbackCopy(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  $('input').addEventListener('input', function () {
+    this.style.height = '';
+    this.style.height = Math.min(this.scrollHeight, 180) + 'px';
+  });
+
+  /* ---------- init firebase ---------- */
+  function initAppCheck() {
+    var cfg = (typeof CONFIG !== 'undefined' && CONFIG) ? CONFIG : {};
+    var siteKey = (cfg.FIREBASE_APP_CHECK_SITE_KEY || '').trim();
+    if (!siteKey || !firebase.appCheck) return Promise.resolve();
+    return Promise.resolve().then(function () {
+      try {
+        firebase.appCheck().activate(siteKey, true);
+        return firebase.appCheck().getToken(false);
+      } catch (e) { return null; }
+    });
+  }
+
+  function init() {
+    firebase.initializeApp(FIREBASE_CONFIG);
+    window.nucleaAppCheckReady = initAppCheck();
+    window.nucleaAppCheckReady.then(function () {
+      firebase.auth().onAuthStateChanged(function (u) {
+        loadLocal();
+        if (u) showApp(u);
+        else {
+          $('login').classList.remove('hidden');
+          $('app').classList.add('hidden');
+        }
+      });
+    });
+  }
+
+  loadLocal();
+
+  var FIREBASE_SDK_BASE = 'https://www.gstatic.com/firebasejs/9.23.0/';
+  loadScript(FIREBASE_SDK_BASE + 'firebase-app-compat.js', function () {
+    loadScript(FIREBASE_SDK_BASE + 'firebase-app-check-compat.js', function () {
+      loadScript(FIREBASE_SDK_BASE + 'firebase-auth-compat.js', init);
+    });
+  });
+
+  // Mostra login enquanto o SDK carrega
+})();
+</script>
+</body>
+</html>
